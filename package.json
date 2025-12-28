@@ -1,0 +1,20 @@
+{
+  "name": "tedxjssis-website",
+  "version": "1.0.0",
+  "description": "TEDxJSS International School website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'GitHub Pages uses static files - no build needed'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "openai": "^3.3.0"
+  },
+  "devDependencies": {
+    "vercel": "^25.2.0"
+  }
+}
