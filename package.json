@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "node server.js",
-    "build": "echo 'GitHub Pages uses static files - no build needed'"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,5 @@
     "openai": "^3.3.0"
   },
   "devDependencies": {
-    "vercel": "^25.2.0"
   }
 }
