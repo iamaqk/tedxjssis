@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEDxJSS International School Youth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+
+        .ted-red {
+            color: #ff4444;
+        }
+
+        .ted-red-bg {
+            background-color: #ff4444;
+        }
+
+        .ted-red-gradient {
+            background: linear-gradient(135deg, #ff4444, #cc3333);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .nav-link.active {
+            color: #ff4444;
+            border-bottom: 2px solid #ff4444;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-glass {
+            background: rgba(41, 36, 36, 0.286);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(106, 83, 83, 0.305);
+        }
+
+        .glow-red {
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+        }
+
+        .hover-glow:hover {
+            box-shadow: 0 10px 30px rgba(255, 68, 68, 0.4);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ff4444, #ff6666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-exit {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-exit-active {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-link {
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        .card-hover {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-glow {
+            transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ted-red-gradient,
+        .glass-effect,
+        .dark-glass {
+            transition: background 0.4s, box-shadow 0.4s;
+        }
+
+        .mobile-menu-anim {
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .mobile-menu-anim.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border-radius: 24px;
+            border: 1.5px solid rgba(153, 111, 111, 0.673);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-glass::before {
+            content: '';
+            position: absolute;
+            left: 10%;
+            top: 10%;
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle at 60% 40%, rgba(0, 0, 0, 0.25) 0%, rgba(255, 255, 255, 0.05) 100%);
+            filter: blur(24px);
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 1;
+            animation: liquidMorph 8s ease-in-out infinite;
+        }
+
+        @keyframes liquidMorph {
+
+            0%,
+            100% {
+                border-radius: 24px 24px 24px 24px;
+            }
+
+            25% {
+                border-radius: 40px 20px 30px 50px;
+            }
+
+            50% {
+                border-radius: 24px 40px 24px 40px;
+            }
+
+            75% {
+                border-radius: 50px 24px 40px 20px;
+            }
+        }
+
+        .ripple {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ripple circle {
+            fill: rgba(255, 255, 255, 0.12);
+            animation: rippleAnim 8s infinite linear;
+        }
+
+        @keyframes rippleAnim {
+            0% {
+                r: 0;
+                opacity: 0.7;
+            }
+
+            70% {
+                r: 120;
+                opacity: 0.2;
+            }
+
+            100% {
+                r: 150;
+                opacity: 0;
+            }
+        }
+
+        /* Refactored inline styles into CSS classes */
+        .gradient-title {
+            background: linear-gradient(90deg, #ff4444 60%, #cc3333 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            border-radius: 0.75rem;
+            padding: 0.5rem 0;
+        }
+    </style>
+</head>
+
+<body class="bg-black font-sans text-white">
+    <!-- Navigation -->
+    <nav class="dark-glass shadow-2xl sticky top-0 z-50 border-b border-gray-700" role="navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <!-- TEDx Logo -->
+                    <div class="flex-shrink-0 flex items-center h-16">
+                        <img src="assets/logo.png" alt="TEDxJSS Logo" class="h-14 w-auto object-contain">
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#"
+                            class="nav-link text-gray-300 hover:text-red-400 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-black-800 active"
+                            onclick="showPage('home')">Home</a>
+                        <a href="#"
+                            class="nav-link text-gray-300 hover:text-red-400 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-black-800"
+                            onclick="showPage('about')">About TEDx</a>
+                        <a href="#"
+                            class="nav-link text-gray-300 hover:text-red-400 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-black-800"
+                            onclick="showPage('team')">Our Team</a>
+                        <a href="#"
+                            class="nav-link text-gray-300 hover:text-red-400 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-black-800"
+                            onclick="showPage('speakers')">Speakers</a>
+                        <a href="#"
+                            class="nav-link text-gray-300 hover:text-red-400 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-black-800"
+                            onclick="showPage('contact')">Contact</a>
+                            <a href="#"
+                            class="nav-link text-gray-300 hover:text-red-400 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-black-800"
+                            onclick="showPage('our event')">Our Event</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" aria-label="Toggle mobile menu"
+                        class="text-gray-300 hover:text-red-400 focus:outline-none p-2 rounded-lg hover:bg-black-800 transition-colors">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-black-800 border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#"
+                    class="block px-3 py-2 text-gray-300 hover:text-red-400 rounded-lg hover:bg-black-700 transition-colors"
+                    onclick="showPage('home'); toggleMobileMenu()">Home</a>
+                <a href="#"
+                    class="block px-3 py-2 text-gray-300 hover:text-red-400 rounded-lg hover:bg-black-700 transition-colors"
+                    onclick="showPage('about'); toggleMobileMenu()">About TEDx</a>
+                <a href="#"
+                    class="block px-3 py-2 text-gray-300 hover:text-red-400 rounded-lg hover:bg-black-700 transition-colors"
+                    onclick="showPage('team'); toggleMobileMenu()">Our Team</a>
+                <a href="#"
+                    class="block px-3 py-2 text-gray-300 hover:text-red-400 rounded-lg hover:bg-black-700 transition-colors"
+                    onclick="showPage('speakers'); toggleMobileMenu()">Speakers</a>
+                <a href="#"
+                    class="block px-3 py-2 text-gray-300 hover:text-red-400 rounded-lg hover:bg-black-700 transition-colors"
+                    onclick="showPage('sponsors'); toggleMobileMenu()">Sponsors</a>
+                <a href="#"
+                    class="block px-3 py-2 text-gray-300 hover:text-red-400 rounded-lg hover:bg-black-700 transition-colors"
+                    onclick="showPage('contact'); toggleMobileMenu()">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-auto py-20 bg-black">
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+
+                <h1 class="text-7xl md:text-12xl font-bold mb-8 leading-tight">
+                    <span class="gradient-text">Ideas Worth</span><br>
+                    <span class="text-white">Spreading</span>
+                </h1>
+
+                <br><br>
+
+
+                <img src="assets\Banner.jpg" alt="TEDxJSS Banner" class="w-full h-auto rounded-xl mx-auto">
+
+
+                <br><br>
+
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <button
+                        class="ted-red-gradient text-white px-10 py-4 rounded-full text-lg font-semibold hover-glow transition-all duration-300 transform hover:scale-105"
+                        onclick="showPage('speakers')">
+                        Discover Speakers
+                    </button>
+                    <button
+                        class="ted-red-border text-white px-10 py-4 rounded-full text-lg font-semibold border-2 border-red-500 hover:bg-red-500/20 transition-all duration-300 transform hover:scale-105"
+                        onclick="showPage('contact')">
+                        Get Involved
+                    </button>
+                </div>
+            </div>
+
+        </section>
+        <section class="py-20 bg-black-800 relative">
+            <div class="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-transparent ">
+
+            </div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-10 gradient-title">Event Details</h2>
+
+                <div
+                    class="dark-glass p-8 rounded-2xl text-center card-hover transition-all duration-300 border border-gray-700">
+                    <div class="text-6xl mb-6">🎨</div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Theme</h3>
+                    <p class="text-gray-300 leading-relaxed  ">
+                        Breaking Silence: Voices That Need to Be Heard
+                    </p>
+                    <div class="mt-6 w-16 h-1 ted-red-bg mx-auto rounded-full"></div>
+                </div>
+
+                <br>
+
+                <div class="grid md:grid-cols-2 gap-8">
+
+                    <div
+                        class="dark-glass p-8 rounded-2xl text-center card-hover transition-all duration-300 border border-gray-700">
+                        <div class="text-6xl mb-6">📅</div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Date</h3>
+                        <p class="text-gray-300 leading-relaxed">Friday, January 9, 2026 </p>
+                        <p>
+                            Click Here to add to calender
+                        </p>
+                        <div class="mt-6 w-16 h-1 ted-red-bg mx-auto rounded-full"></div>
+                    </div>
+                    <div
+                        class="dark-glass p-8 rounded-2xl text-center card-hover transition-all duration-300 border border-gray-700">
+                        <div class="text-6xl mb-6">🕐</div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Time</h3>
+                        <p class="text-gray-300 leading-relaxed">
+                            From 1:00 pm to 4:00 pm </p>
+                        <div class="mt-6 w-16 h-1 ted-red-bg mx-auto rounded-full"></div>
+                    </div>
+                    <div
+                        class="dark-glass p-8 rounded-2xl text-center card-hover transition-all duration-300 border border-gray-700">
+                        <div class="text-6xl mb-6">📍</div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Venue</h3>
+                        <p class="text-gray-300 leading-relaxed">Auditorium, JSS International School, JVC, Dubai</p>
+                        <p>
+                            click here to open in google maps
+                        </p>
+                        <div class="mt-6 w-16 h-1 ted-red-bg mx-auto rounded-full"></div>
+                    </div>
+                    <div
+                        class="dark-glass p-8 rounded-2xl text-center card-hover transition-all duration-300 border border-gray-700">
+                        <div class="text-6xl mb-6">💺</div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Seats</h3>
+                        <p class="text-gray-300 leading-relaxed">Upto 100 Seats for Audience memebers</p>
+                        <p>
+                            Inquiry for tickets here
+                        </p>
+                        <div class="mt-6 w-16 h-1 ted-red-bg mx-auto rounded-full"></div>
+                    </div>
+                </div>
+
+
+
+                <hr class="my-16 border-gray-700">
+                <!-- TEDx required description on homepage 
+            <section class="max-w-4xl mx-auto my-8 p-6 dark-glass rounded-xl border border-gray-700">
+                <h2 class="text-2xl font-bold mb-4 gradient-text">What is TEDx?</h2>
+                <p class="text-gray-300 mb-2">
+                    In the spirit of discovering and spreading ideas, TED has created a program called TEDx. TEDx is
+                    a program of
+                    local, self-organized events that bring people together to share a TED-like experience. Our
+                    event is called
+                    TEDxJSS International School Youth, where x = independently organized TED event. At our TEDxJSS
+                    International
+                    School Youth event, TED Talks video and live speakers will combine to spark deep discussion and
+                    connection in a
+                    small group. The TED Conference provides general guidance for the TEDx program, but individual
+                    TEDx events,
+                    including ours, are self-organized.
+                    <a href="https://www.ted.com/about/programs-initiatives/tedx-program" class="text-red-400 underline"
+                        target="_blank">Learn more about TEDx</a>
+                </p>
+            </section>
+                -->
+
+            </div>
+
+
+        </section>
+    </div>
+
+
+
+    <!-- About Tedx Page -->
+    <div id="about" class="page">
+        <section class="py-20 bg-black-900 relative">
+            <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-red-900/10 to-transparent"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-10">
+                        <span class="gradient-text">About</span> <span class="text-white">TEDxJSS International School
+                            Youth</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                        TEDxJSS International School Youth is a platform for young minds to share their ideas, inspire
+                        change, and connect with a global community. Our independently organized event is dedicated to
+                        fostering creativity, innovation, and leadership among students.</p>
+                </div>
+
+                <div class="space-y-12  ">
+                    <!-- Mission Section -->
+                    <div class="dark-glass p-10 rounded-3xl border border-gray-700 hover-glow mb-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 ted-red-gradient rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">🎯</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-white">Our Mission</h2>
+                        </div>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            TEDxJSS International School Youth is an independently organized TED event that brings
+                            together young minds, innovative thinkers, and inspiring speakers to share ideas worth
+                            spreading. Our mission is to foster creativity, critical thinking, and positive change
+                            within our school community and beyond.
+                        </p>
+                    </div>
+
+                    <!-- What is TEDx Section -->
+                    <div class="grid md:grid-cols-2 gap-8 mb-8">
+                        <div
+                            class="dark-glass p-8 rounded-2xl border border-gray-700 card-hover transition-all duration-300">
+                            <div class="flex items-center mb-4">
+                                <div
+                                    class="w-10 h-10 ted-red-gradient rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-xl">❓</span>
+                                </div>
+                                <h3 class="text-2xl font-bold gradient-text">What is TEDx?</h3>
+                            </div>
+                            <p class="text-gray-300 leading-relaxed">
+                                TEDx events are local, self-organized events that bring people together to share a
+                                TED-like experience. Our event includes live speakers and TED Talks videos to spark deep
+                                discussion and connection.
+                            </p>
+                        </div>
+                        <div
+                            class="dark-glass p-8 rounded-2xl border border-gray-700 card-hover transition-all duration-300">
+                            <div class="flex items-center mb-4">
+                                <div
+                                    class="w-10 h-10 ted-red-gradient rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-xl">🌱</span>
+                                </div>
+                                <h3 class="text-2xl font-bold gradient-text">Why Youth?</h3>
+                            </div>
+                            <p class="text-gray-300 leading-relaxed">
+                                Young people have unique perspectives and innovative solutions to global challenges. Our
+                                youth-focused event amplifies these voices and encourages the next generation of
+                                leaders.
+                            </p>
+                        </div>
+                    </div>
+
+
+
+
+                    <div
+                        class="dark-glass p-10 rounded-3xl border border-red-500/30 bg-gradient-to-br from-red-900/20 to-transparent">
+                        <div class="flex items-center mb-8">
+                            <div class="w-12 h-12 ted-red-gradient rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">💎</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-white">Our Values</h2>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-8 h-8 ted-red-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-white text-sm">💡</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-white mb-2">Innovation</h4>
+                                    <p class="text-gray-300">Encouraging creative thinking and novel approaches to
+                                        complex challenges</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-8 h-8 ted-red-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-white text-sm">🤝</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-white mb-2">Inclusion</h4>
+                                    <p class="text-gray-300">Welcoming diverse voices and perspectives from all
+                                        backgrounds</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-8 h-8 ted-red-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-white text-sm">⚡</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-white mb-2">Impact</h4>
+                                    <p class="text-gray-300">Inspiring action and positive change in our communities</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-8 h-8 ted-red-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-white text-sm">✨</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-white mb-2">Integrity</h4>
+                                    <p class="text-gray-300">Maintaining authenticity and truth in all we do</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-16 border-gray-700">
+
+                    <!-- About TEDx Section -->
+                    <div class="dark-glass p-10 rounded-3xl border border-gray-700 hover-glow mb-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 ted-red-gradient rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">🎯</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-white">About TEDx</h2>
+                            <br>
+                        </div>
+
+                        <h3 class="text-2xl font-semibold mb-4 text-white">x = independently organized event</h3>
+                        <p class="text-gray-300 mb-4">
+                            In the spirit of discovering and spreading ideas, TEDx is a program of local, self-organized
+                            events that bring
+                            people together to share a TED-like experience. At a TEDx event, TED Talks video and live
+                            speakers combine to
+                            spark deep discussion and connection. These local, self-organized events are branded TEDx,
+                            where x =
+                            independently organized TED event. The TED Conference provides general guidance for the TEDx
+                            program, but
+                            individual TEDx events are self-organized. (Subject to certain rules and regulations.)
+                        </p>
+                    </div>
+                    <!-- About TED Section -->
+                    <div class="dark-glass p-10 rounded-3xl border border-gray-700 hover-glow mb-8">
+                        <h2 class="text-2xl font-bold mb-4 gradient-text">About TED</h2>
+                        <p class="text-gray-300">
+                            TED is a nonprofit, nonpartisan organization dedicated to discovering, debating and
+                            spreading ideas that spark
+                            conversation, deepen understanding and drive meaningful change. Our organization is devoted
+                            to curiosity,
+                            reason, wonder and the pursuit of knowledge — without an agenda. We welcome people from
+                            every discipline and
+                            culture who seek a deeper understanding of the world and connection with others, and we
+                            invite everyone to
+                            engage with ideas and activate them in your community.<br><br>
+                            <hr> <br>
+                            TED began in 1984 as a conference where Technology, Entertainment and Design converged, but
+                            today it spans a
+                            multitude of worldwide communities and initiatives exploring everything from science and
+                            business to education,
+                            arts and global issues. In addition to the TED Talks curated from our annual conferences and
+                            published on
+                            TED.com, we produce <a href="https://audiocollective.ted.com/"
+                                class="text-red-400 underline" target="_blank">original podcasts</a>, <a
+                                href="https://www.ted.com/series" class="text-red-400 underline" target="_blank">short
+                                video series</a>, <a href="https://ed.ted.com/" class="text-red-400 underline"
+                                target="_blank">animated educational lessons (TED-Ed)</a> and TV programs that are
+                            translated into more than
+                            100 languages and distributed via partnerships around the world. Each year, thousands of
+                            independently run <a href="https://www.ted.com/about/programs-initiatives/tedx-program"
+                                class="text-red-400 underline" target="_blank">TEDx events</a> bring people together to
+                            share ideas and bridge divides in communities on
+                            every continent. Through the <a href="https://www.audaciousproject.org/"
+                                class="text-red-400 underline" target="_blank">Audacious Project</a>, TED has helped
+                            catalyze more than $3 billion in funding for projects
+                            that seek to make the world more beautiful, sustainable and just. In 2020, TED launched <a
+                                href="https://countdown.ted.com/" class="text-red-400 underline"
+                                target="_blank">Countdown</a>, an
+                            initiative to accelerate solutions to the climate crisis and mobilize a movement for a
+                            net-zero future, and in
+                            2023 TED launched <a href="https://www.ted.com/about/programs-initiatives/teddemocracy"
+                                class="text-red-400 underline" target="_blank">TED Democracy</a> to spark a new kind of
+                            conversation focused
+                            on realistic pathways towards a more vibrant and equitable future. View a full list of <a
+                                href="https://www.ted.com/about/programs-initiatives" class="text-red-400 underline"
+                                target="_blank">TED’s
+                                many programs and initiatives</a>.
+                        </p>
+                        <br><br>
+                        <p>Follow TED on <a href="http://www.facebook.com/TED" class="text-red-400 underline"
+                                target="_blank">Facebook </a>, <a href="https://instagram.com/ted">Instagram</a>,
+                            <a href="https://www.linkedin.com/company/ted-conferences" class="text-red-400 underline"
+                                target="_blank">LinkedIn</a>, <a href="https://www.tiktok.com/@tedtoks?lang=en"
+                                class="text-red-400 underline" target="_blank">TikTok</a>, and <a
+                                href="http://twitter.com/TEDTalks" class="text-red-400 underline" target="_blank">X</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+    </div>
+    </section>
+
+
+    <!-- Team Page -->
+    <!-- Our Event: TEDx Reel Making Competition -->
+    <div id="our event" class="page">
+        <section class="py-20 bg-black-900 relative min-h-screen">
+            <div class="absolute inset-0 bg-gradient-to-br from-red-900/10 to-transparent"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        <span class="gradient-text">Our Event</span>
+                        <span class="text-white"> — TEDx Reel Making Competition</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                        Calling all storytellers, filmmakers and creators! Produce a short reel (30–90 seconds)
+                        inspired by this year's theme "Breaking Silence: Voices That Need to Be Heard". Capture an
+                        idea, a moment, or a call-to-action — make it memorable.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div class="dark-glass p-8 rounded-2xl border border-gray-700 card-hover">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Who can enter?</h3>
+                        <p class="text-gray-300">Open to students of JSS International School (all grades). Teams of up to
+                            3 are allowed. Individual entries welcome.</p>
+                    </div>
+                    <div class="dark-glass p-8 rounded-2xl border border-gray-700 card-hover">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Format & Length</h3>
+                        <p class="text-gray-300">MP4 or MOV preferred. Length: 30 to 90 seconds. Caption and subtitles
+                            encouraged for accessibility.</p>
+                    </div>
+                </div>
+
+                <div class="dark-glass p-8 rounded-2xl border border-gray-700 mb-10">
+                    <h2 class="text-3xl font-bold mb-4 gradient-text">Competition Rules</h2>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Original work only. No copyrighted music or footage unless you have permission.</li>
+                        <li>Maximum length 90 seconds, minimum 30 seconds.</li>
+                        <li>One entry per person/team.</li>
+                        <li>Entries must relate to the event theme.</li>
+                        <li>By entering, you grant TEDxJSS permission to show your reel during the event and on our
+                            channels.</li>
+                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-12">
+                    <div class="dark-glass p-6 rounded-2xl border border-gray-700">
+                        <h4 class="text-xl font-semibold text-white mb-2">Timeline</h4>
+                        <p class="text-gray-300">Submissions open: Dec 1, 2025<br>Deadline: Jan 2, 2026<br>Winners
+                            announced: Jan 7, 2026</p>
+                    </div>
+                    <div class="dark-glass p-6 rounded-2xl border border-gray-700">
+                        <h4 class="text-xl font-semibold text-white mb-2">Prizes</h4>
+                        <p class="text-gray-300">1st: AED 1000 + feature at the event<br>2nd: AED 500<br>3rd:
+                            AED 250 + certificates</p>
+                    </div>
+                    <div class="dark-glass p-6 rounded-2xl border border-gray-700">
+                        <h4 class="text-xl font-semibold text-white mb-2">Judging Criteria</h4>
+                        <p class="text-gray-300">Creativity (30%), Relevance to theme (30%), Storytelling &
+                            Emotional impact (25%), Technical quality (15%)</p>
+                    </div>
+                </div>
+
+                <div class="dark-glass p-8 rounded-2xl border border-gray-700 mb-12">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">How to Submit</h3>
+                    <ol class="list-decimal list-inside text-gray-300 space-y-2">
+                        <li>Upload your video to Google Drive, YouTube (unlisted) or Vimeo.</li>
+                        <li>Fill the submission form below with the direct share link and team details.</li>
+                        <li>If you prefer to submit a file, email the download link to <a
+                                href="mailto:submissions@tedxjss.org" class="text-red-400 underline">submissions@tedxjss.org</a>
+                            with subject "Reel Submission — [Team Name]".</li>
+                    </ol>
+
+                    <form id="reel-form" class="mt-6 grid md:grid-cols-2 gap-4" onsubmit="handleReelSubmit(event)">
+                        <input type="text" name="team" placeholder="Team / Creator name"
+                            class="p-3 rounded-lg bg-black/40 border border-gray-700 text-white" required>
+                        <input type="email" name="email" placeholder="Contact email"
+                            class="p-3 rounded-lg bg-black/40 border border-gray-700 text-white" required>
+                        <input type="text" name="school" placeholder="School / Grade (optional)"
+                            class="p-3 rounded-lg bg-black/40 border border-gray-700 text-white">
+                        <input type="url" name="video_url" placeholder="Video link (Google Drive / YouTube / Vimeo)"
+                            class="p-3 rounded-lg bg-black/40 border border-gray-700 text-white" required>
+                        <textarea name="notes" placeholder="Short description (1-2 lines)"
+                            class="p-3 rounded-lg bg-black/40 border border-gray-700 text-white col-span-2" rows="3"></textarea>
+                        <div class="col-span-2 text-right">
+                            <button type="submit"
+                                class="ted-red-gradient text-white px-6 py-3 rounded-full font-semibold">Submit
+                                Entry</button>
+                        </div>
+                    </form>
+
+                    <p class="text-sm text-gray-500 mt-4">Note: This form collects details only — after submission the
+                        organizers will contact you for file transfer if needed.</p>
+                </div>
+
+                <div class="dark-glass p-8 rounded-2xl border border-gray-700 mb-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Tips for a great reel</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Hook the viewer in the first 3 seconds.</li>
+                        <li>Keep the message simple and focused.</li>
+                        <li>Use good lighting and clear audio.</li>
+                        <li>Add subtitles for accessibility.</li>
+                    </ul>
+                </div>
+
+                <div class="dark-glass p-6 rounded-2xl border border-gray-700">
+                    <h4 class="text-xl font-semibold text-white mb-2">Questions?</h4>
+                    <p class="text-gray-300">Contact the media team at <a href="mailto:media@tedxjss.org"
+                            class="text-red-400 underline">media@tedxjss.org</a> or speak to the organizing committee.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div id="team" class="page">
+        <section class="py-20 bg-black-900 relative min-h-screen">
+            <div class="absolute inset-0 bg-gradient-to-br from-red-900/10 to-transparent"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        <span class="text-white">Meet Our</span> <span class="gradient-text">Team</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                        The passionate individuals behind TEDxJSS International School Youth, working together to bring
+                        ideas worth spreading to our community.
+                    </p>
+                </div>
+
+                <!-- Organizing Committee -->
+                <div class="mb-20">
+                    <div class="flex items-center justify-center mb-12">
+                        <div class="w-16 h-16 ted-red-gradient rounded-full flex items-center justify-center mr-4">
+                            <span class="text-2xl">🎯</span>
+                        </div>
+                        <h2 class="text-4xl font-bold gradient-text">Organizing Committee</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                        <!-- Jash - Team President -->
+                        <div
+                            class="dark-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-red-500/30 bg-gradient-to-br from-red-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-red-500/30 to-red-600/40 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Jash.png"></span>
+                                </div>
+                                <div
+                                    class="absolute top-4 right-4 w-8 h-8 ted-red-gradient rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm">👑</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Jash</h3>
+                                <p class="text-red-400 mb-2 font-medium">Team President</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sahana - Vice President -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-indigo-500/30 bg-gradient-to-br from-indigo-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-indigo-500/20 to-indigo-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Sahana.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Sahana</h3>
+                                <p class="text-red-400 mb-2 font-medium">Vice President </p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Prateeksha - Curator -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-indigo-500/30 bg-gradient-to-br from-indigo-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-indigo-500/20 to-indigo-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Prateeksha.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Prateeksha</h3>
+                                <p class="text-red-400 mb-2 font-medium"> Curator</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Aarnav - Website Manager -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-purple-500/20 to-purple-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Aarnav.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Aarnav</h3>
+                                <p class="text-red-400 mb-2 font-medium">Website Manager</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Aaquib - Website Manager -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-purple-500/20 to-purple-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Aaquib.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Aaquib</h3>
+                                <p class="text-red-400 mb-2 font-medium">Website Manager</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mahi - Marketing -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-purple-500/20 to-purple-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Mahi.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Mahi</h3>
+                                <p class="text-red-400 mb-2 font-medium">Marketing</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Imthiyaz - Marketing -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-purple-500/20 to-purple-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Imthiyaz.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Imthiyaz</h3>
+                                <p class="text-red-400 mb-2 font-medium">Marketing</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Shananta - Communications -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-blue-500/30 bg-gradient-to-br from-blue-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-blue-500/20 to-blue-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Shananta.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Shanantha</h3>
+                                <p class="text-red-400 mb-2 font-medium">Communications</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Ali - Communications -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-blue-500/30 bg-gradient-to-br from-blue-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-blue-500/20 to-blue-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Ali.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Ali</h3>
+                                <p class="text-red-400 mb-2 font-medium">Communications</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sneha - Budgeting -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-green-500/30 bg-gradient-to-br from-green-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-green-500/20 to-green-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Sneha.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Sneha</h3>
+                                <p class="text-red-400 mb-2 font-medium">Budgeting</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Advika - Budgeting -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-green-500/30 bg-gradient-to-br from-green-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-green-500/20 to-green-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Advika.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Advika</h3>
+                                <p class="text-red-400 mb-2 font-medium">Budgeting</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Rene - Head of Staff -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-yellow-500/30 bg-gradient-to-br from-yellow-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-yellow-500/20 to-yellow-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Rene.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Rene</h3>
+                                <p class="text-red-400 mb-2 font-medium">Head of Staff</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Aimen - Head of Staff -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-yellow-500/30 bg-gradient-to-br from-yellow-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-yellow-500/20 to-yellow-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Aimen.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Aimen</h3>
+                                <p class="text-red-400 mb-2 font-medium">Head of Staff</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Samrudhhi - Event Manager -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-pink-500/30 bg-gradient-to-br from-pink-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-pink-500/20 to-pink-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Samruddhi.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Samruddhi</h3>
+                                <p class="text-red-400 mb-2 font-medium">Event Manager</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Keerthi - Event Manager -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-pink-500/30 bg-gradient-to-br from-pink-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-pink-500/20 to-pink-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Kerthi.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Keerthi </h3>
+                                <p class="text-red-400 mb-2 font-medium">Event Manager</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Akshin - Design & Editorials -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-teal-500/30 bg-gradient-to-br from-teal-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-teal-500/20 to-teal-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Akshin.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Akshin</h3>
+                                <p class="text-red-400 mb-2 font-medium">Design & Editorials</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Aryan - Design & Editorials -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-teal-500/30 bg-gradient-to-br from-teal-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-teal-500/20 to-teal-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src="assets\Team\Aryan.png"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Aryan</h3>
+                                <p class="text-red-400 mb-2 font-medium">Design & Editorials</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Siddhant - Video & Production Lead -->
+                        <div
+                            class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-500/30 bg-gradient-to-br from-gray-900/20 to-transparent hover-glow">
+                            <div
+                                class="h-56 bg-gradient-to-br from-gray-500/20 to-gray-600/30 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                <div
+                                    class="relative z-10 w-40 h-40 glass-effect rounded-2xl flex items-center justify-center">
+                                    <span class="text-4xl"><img src=" assets\Team\Siddhant.png"
+                                            alt="Siddhant pic"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Siddhant</h3>
+                                <p class="text-red-400 mb-2 font-medium">Video & Production Lead</p>
+                                <div class="flex space-x-3 mt-4">
+                                    <a href="#"
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-blue-700 transition-colors"
+                                        title="LinkedIn">in</a>
+                                    <a href="#"
+                                        class="w-8 h-8 bg-black-600 rounded-full flex items-center justify-center text-white text-xs hover:bg-black-700 transition-colors"
+                                        title="Email">@</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Student Volunteers -->
+                <div class="mb-16">
+                    <div class="flex items-center justify-center mb-12">
+                        <div class="w-14 h-14 ted-red-gradient rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl">🌟</span>
+                        </div>
+                        <h2 class="text-3xl font-bold gradient-text">Student Volunteers</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 lg:grid-cols-6 gap-6">
+                        <div
+                            class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Amogh Srivastava</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 1q</p>
+                        </div>
+                        <div
+                            class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                           
+                            <h4 class="font-semibold text-white text-sm">Aadithya Pradeep</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 10</p>
+                        </div>
+                        <div
+                            class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Shekha Ramachandran</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 10</p>
+                        </div>
+                        <div
+                            class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Bushra Ansari</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 10</p>
+                        </div>
+                        <div
+                            class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Tanish Pandya</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 11</p>
+                        </div>
+                        <div
+                            class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Ahan Nithin</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 12</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Sreehari menon</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 10</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Yukta Vasandan</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 11</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Vondra Roshin Princeley</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 12</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Sanjana Yallappa</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 10</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Ashmitha Parthiban</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 11</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Nipun Pawar</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 12</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                           
+                            <h4 class="font-semibold text-white text-sm">Mohammed Ali</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 11</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                        
+                            <h4 class="font-semibold text-white text-sm">Shreesha Devadiga</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 12</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Ishaan Wadkar</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 10</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Navya Parashar</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 11</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                        
+                            <h4 class="font-semibold text-white text-sm">Anika Abhijit</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 12</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                           
+                            <h4 class="font-semibold text-white text-sm">Michelle</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 11</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Ethen Thomas</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 12</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Ishaan Singh</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 10</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+                            
+                            <h4 class="font-semibold text-white text-sm">Mohammed Irfaan Anwar</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 11</p>
+                        </div>
+                        <div class="dark-glass p-6 rounded-xl text-center border border-gray-700 card-hover transition-all duration-300">
+
+                            <h4 class="font-semibold text-white text-sm">Atharva Naik</h4>
+                            <p class="text-gray-400 text-xs mt-1">Grade 12</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Speakers Page -->
+    <div id="speakers" class="page">
+        <section class="py-20 bg-black-900 relative min-h-screen">
+            <div class="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-transparent"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        <span class="text-white">Our</span> <span class="gradient-text">Speakers</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                        Meet the inspiring individuals who will share their ideas, experiences, and insights at TEDxJSS
+                        International School Youth.
+                    </p>
+                </div>
+
+                <!-- Speaker Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+
+                    <!-- Guest Speakers -->
+                    <h2 class="text-3xl font-bold mb-6 text-white col-span-full">Guest Speakers</h2>
+
+                    <!-- Claudia Pinto -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Claudio.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Claudia Pinto</h3>
+                                <p class="text-white mb-4 font-medium">CEO, Empowering Women; Philanthropy &
+                                    Sustainability Advisor
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Samir Geepee -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Samir.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Samir Geepee</h3>
+                                <p class="text-white mb-4 font-medium">CEO, The Clarity Game</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Govindrao Naik -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/CEO.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Govindrao Naik</h3>
+                                <p class="text-white mb-4 font-medium">CEO, JSS</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parent Speakers -->
+                    <h2 class="text-3xl font-bold mb-6 text-white col-span-full">Parent Speakers</h2>
+
+                    <!-- Sivanathan Perumal -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Sivananthan.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Sivanathan Perumal</h3>
+                                <p class="text-white mb-4 font-medium">Parent</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sridhar Rao -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Sridhar.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Sridhar Rao</h3>
+                                <p class="text-white mb-4 font-medium">Senior Project Manager, Dragon Oil</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bijal Mehta -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Bijal.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Bijal Mehta</h3>
+                                <p class="text-white mb-4 font-medium">Parent</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Speakers -->
+                    <h2 class="text-3xl font-bold mb-6 text-white col-span-full">Student Speakers</h2>
+
+                    <!-- Eric Abraham -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Eric.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Eric Abraham</h3>
+                                <p class="text-white mb-4 font-medium">Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Aisha Elham -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Aisha.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Aisha Elham</h3>
+                                <p class="text-white mb-4 font-medium">Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shubhan Naik -->
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Shubhan.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Shubhan Naik</h3>
+                                <p class="text-white mb-4 font-medium">Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- External Student Speakers -->
+                    <h2 class="text-3xl font-bold mb-6 text-white col-span-full">External Student Speakers</h2>
+
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Adityanarayan.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Adithyananryan</h3>
+                                <p class="text-white mb-4 font-medium">External Student Speaker</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="liquid-glass rounded-2xl overflow-hidden card-hover transition-all duration-300 border border-gray-700 hover:bg-red-700">
+                        <div class="relative bg-black">
+                            <img src="assets/Speakers/Divyam.png" class="w-full h-full object-cover">
+                            <div class="p-6 bg-red-500/80 absolute bottom-0 w-full h-32 flex flex-col justify-end">
+                                <h3 class="text-2xl font-bold mb-2 text-white">Divyam</h3>
+                                <p class="text-white mb-4 font-medium">External Student Speaker</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const speakers = {
+                        guest: [
+                            {
+                                name: "Claudia Pinto",
+                                role: "CEO, Empowering Women; Philanthropy & Sustainability Advisor",
+                                description: "Leader in women empowerment and sustainability advising HH Sheikh Marwan bin Mohammed bin Rashid Al Maktoum.",
+                                image: "assets/Speakers/Claudio.png"
+                            },
+                            {
+                                name: "Samir Geepee",
+                                role: "CEO, The Clarity Game",
+                                description: "Founder of a leadership development program and gamified coaching experience.",
+                                image: "assets/Speakers/Samir.png"
+                            },
+                            {
+                                name: "Govindrao Naik",
+                                role: "CEO, JSS",
+                                description: "Executive leader of the JSS organization.",
+                                image: "assets/Speakers/Govindrao.png"
+                            }
+                        ],
+                        parent: [
+                            {
+                                name: "Sivanathan Perumal",
+                                role: "Parent (Shanu's parent)",
+                                description: "Family perspective and community involvement.",
+                                image: "assets/Speakers/Sivananthan.png"
+                            },
+                            {
+                                name: "Sridhar Rao",
+                                role: "Senior Project Manager, Dragon Oil",
+                                description: "Industry leader with expertise in large-scale projects.",
+                                image: "assets/Speakers/Sridhar.png"
+                            },
+                            {
+                                name: "Bijal Mehta",
+                                role: "Parent (Jash's parent)",
+                                description: "Community and family representative.",
+                                image: "assets/Speakers/Bijal.png"
+                            }
+                        ],
+                        student: [
+                            {
+                                name: "Eric Abraham",
+                                role: "Student",
+                                description: "Student speaker from JSS International School.",
+                                image: "assets/Speakers/Eric.png"
+                            },
+                            {
+                                name: "Aisha Elham",
+                                role: "Student",
+                                description: "Student speaker sharing ideas from a youth perspective.",
+                                image: "assets/Speakers/Aisha.png"
+                            },
+                            {
+                                name: "Shubhan Naik",
+                                role: "Student",
+                                description: "Student speaker presenting an inspiring youth talk.",
+                                image: "assets/Speakers/Shubhan.png"
+                            },
+                            {
+                                name: "Adithyananryan",
+                                role: "External Student Speaker",
+                                description: "External student speaker with a unique perspective.",
+                                image: "assets/Speakers/adityanarayan.png"
+                            },
+                            {
+                                name: "Divyam",
+                                role: "External Student Speaker",
+                                description: "External student speaker sharing innovative ideas.",
+                                image: "assets/Speakers/divyam.png"
+                            }
+                        ]
+                    };
+
+                    function renderSpeakers(category, containerId) {
+                        const container = document.getElementById(containerId);
+                        const template = document.getElementById('speaker-card-template').content;
+
+                        speakers[category].forEach(speaker => {
+                            const card = template.cloneNode(true);
+                            card.querySelector('h3').textContent = speaker.name;
+                            card.querySelector('p:nth-of-type(1)').textContent = speaker.role;
+                            card.querySelector('p:nth-of-type(2)').textContent = speaker.description;
+                            card.querySelector('img').src = speaker.image;
+                            container.appendChild(card);
+                        });
+                    }
+
+                    document.addEventListener('DOMContentLoaded', () => {
+                        renderSpeakers('guest', 'guest-speakers');
+                        renderSpeakers('parent', 'parent-speakers');
+                        renderSpeakers('student', 'student-speakers');
+                    });
+                </script>
+
+                <!-- Speaker Guidelines -->
+                <div class="text-center">
+                    <p class="text-gray-300 mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
+                        Learn more about the guidelines for TEDx speakers. Click below to access the document.
+                    </p>
+                    <div class="flex justify-center">
+                        <a href="https://tedxjss-international-school.github.io/Tedx_Speaker_Guidelines.pdf">
+                            <button
+                                class="glass-effect text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all duration-300 border border-gray-600">
+                                View Speaker Guidelines
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- Sponsors Page -->
+    <div id="sponsors" class="page">
+        <section class="py-20 bg-black-900 relative min-h-screen">
+            <div class="absolute inset-0 bg-gradient-to-br from-red-900/10 to-transparent"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        <span class="text-white">Our</span> <span class="gradient-text">Sponsors</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                        We're grateful to our sponsors who make TEDxJSS International School Youth possible. Their
+                        support helps us create an inspiring event that brings ideas worth spreading to our community.
+                    </p>
+                </div>
+                <div class="dark-glass p-8 rounded-2xl mb-12 max-w-4xl mx-auto border border-gray-700">
+                    <img src="https://raw.githubusercontent.com/Cephenium/Proto-v2/ba9b89edad29bf6cd4b99e6a50930f02d7457ce5/assets/logo.png"
+                        alt="TEDx Logo" class="h-500 w-auto object-contain" style="max-height:500px;">
+                </div>
+
+                <!-- Become a Sponsor -->
+                <div
+                    class="dark-glass p-12 rounded-3xl text-center mt-20 border border-red-500/30 bg-gradient-to-br from-red-900/20 to-transparent hover-glow">
+                    <div class="w-20 h-20 ted-red-gradient rounded-full flex items-center justify-center mx-auto mb-8">
+                        <span class="text-4xl">🚀</span>
+                    </div>
+                    <h2 class="text-4xl font-bold mb-6 gradient-text">Become a Sponsor</h2>
+                    <p class="text-gray-300 mb-10 text-lg leading-relaxed max-w-3xl mx-auto">
+                        Join us in spreading ideas worth spreading. Sponsoring TEDxJSS International School Youth gives
+                        your organization the opportunity to support youth education and innovation while gaining
+                        visibility in our community.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <button
+                            class="ted-red-gradient text-white px-10 py-4 rounded-full text-lg font-semibold hover-glow transition-all duration-300 transform hover:scale-105">
+                            Sponsorship Packages
+                        </button>
+                        <button onclick="showPage('contact')"
+                            class="glass-effect text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all duration-300 border border-gray-600">
+                            Contact Us
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <section class="py-20 bg-black-900 relative min-h-screen">
+            <div class="absolute inset-0 bg-gradient-to-br from-red-900/10 to-transparent"></div>
+            <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        <span class="gradient-text">Contact</span> <span class="text-white">Us</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Ready to be part of something extraordinary? Get in touch with us!
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div class="dark-glass p-10 rounded-3xl border border-gray-700 hover-glow">
+                        <div class="flex items-center mb-8">
+                            <div class="w-12 h-12 ted-red-gradient rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">✉️</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-white">Get in Touch</h2>
+                        </div>
+                        <form action="https://formspree.io/f/myznoyjl" method="POST">
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-3">Name</label>
+                                    <input type="text" name="name" required
+                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-3">Email</label>
+                                    <input type="email" name="email" required
+                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-3">Subject</label>
+                                    <select name="subject"
+                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                                        <option>General Inquiry</option>
+                                        <option>Speaking Opportunity</option>
+                                        <option>Sponsorship</option>
+                                        <option>Media/Press</option>
+                                        <option>Tickets</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-3">Message</label>
+                                    <textarea rows="5" name="message" required
+                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all resize-none"></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="w-full ted-red-gradient text-white py-4 rounded-xl text-lg font-semibold hover-glow transition-all duration-300 transform hover:scale-105">
+                                    Send Message
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="space-y-8">
+                        <div
+                            class="dark-glass p-8 rounded-2xl border border-gray-700 card-hover transition-all duration-300">
+                            <div class="flex items-center mb-6">
+                                <div
+                                    class="w-10 h-10 ted-red-gradient rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-xl">🏫</span>
+                                </div>
+                                <h3 class="text-2xl font-bold gradient-text">Event Information</h3>
+                            </div>
+                            <div class="space-y-4 text-gray-300">
+                                <div class="flex items-start">
+                                    <span class="text-red-400 mr-4 mt-1 text-xl">📍</span>
+                                    <div>
+                                        <p class="font-semibold text-white text-lg">JSS International School</p>
+                                        <p class="text-gray-300">School Address Here</p>
+                                        <p class="text-gray-400 text-sm">Venue details will be updated</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-red-400 mr-4 text-xl">📧</span
+                                        class="text-white">tedx.jssis25@gmail.com</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-red-400 mr-4 text-xl">📞</span>
+                                    <span class="text-white">+1 (555) 123-4567</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Media -->
+                        <div
+                            class="dark-glass p-8 rounded-2xl border border-gray-700 card-hover transition-all duration-300">
+                            <div class="flex items-center mb-6">
+                                <div
+                                    class="w-10 h-10 ted-red-gradient rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-xl">🌐</span>
+                                </div>
+                                <h3 class="text-2xl font-bold gradient-text">Follow Us</h3>
+                            </div>
+                            <div class="flex space-x-4">
+                                <!-- Instagram -->
+                                <a href="https://www.instagram.com/tedxjssis?igsh=MWM2anNsZTVka2F1bg==" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-110">
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/instagram.svg"
+                                        alt="Instagram" class="w-6 h-6" style="filter: invert(1);">
+                                </a>
+                                <!-- LinkedIn -->
+                                <a href="#" target="_blank" rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center hover:bg-blue-800 transition-all duration-300 transform hover:scale-110">
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg"
+                                        alt="LinkedIn" class="w-6 h-6" style="filter: invert(1);">
+                                </a>
+                                <!-- YouTube -->
+                                <a href="#" target="_blank" rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-all duration-300 transform hover:scale-110">
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/youtube.svg"
+                                        alt="YouTube" class="w-6 h-6" style="filter: invert(1);">
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Map -->
+                        <div
+                            class="dark-glass p-8 rounded-2xl border border-gray-700 card-hover transition-all duration-300">
+                            <div class="flex items-center mb-6">
+                                <div
+                                    class="w-10 h-10 ted-red-gradient rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-xl">📍</span>
+                                </div>
+                                <h3 class="text-2xl font-bold gradient-text">Location</h3>
+                            </div>
+                            <div
+                                class="bg-black-800 h-56 rounded-xl flex items-center justify-center border border-gray-600 p-0 overflow-hidden">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1807.0318515886374!2d55.203073217102!3d25.065829918169943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6d8f2e7d73ab%3A0x88e9b69044a0a624!2sJSS%20International%20School!5e0!3m2!1sen!2sae!4v1759572000815!5m2!1sen!2sae"
+                                    width="100%" height="220"
+                                    style="filter: invert(1);border:0; border-radius: 0.75rem; min-width: 200px; min-height: 180px;"
+                                    allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-xl font-bold gradient-text mb-6">Quick Links</h2>
+            <div class="flex flex-wrap justify-center gap-6 mb-6">
+                <a href="#" class="text-gray-300 hover:text-red-400 px-4 py-2 rounded transition-colors"
+                    onclick="showPage('home')">Home</a>
+                <a href="#" class="text-gray-300 hover:text-red-400 px-4 py-2 rounded transition-colors"
+                    onclick="showPage('about')">About TEDx</a>
+                <a href="#" class="text-gray-300 hover:text-red-400 px-4 py-2 rounded transition-colors"
+                    onclick="showPage('team')">Our Team</a>
+                <a href="#" class="text-gray-300 hover:text-red-400 px-4 py-2 rounded transition-colors"
+                    onclick="showPage('speakers')">Speakers</a>
+                <a href="#" class="text-gray-300 hover:text-red-400 px-4 py-2 rounded transition-colors"
+                    onclick="showPage('sponsors')">Sponsors</a>
+                <a href="#" class="text-gray-300 hover:text-red-400 px-4 py-2 rounded transition-colors"
+                    onclick="showPage('contact')">Contact</a>
+            </div>
+            <p class="license">This independent TEDx event is operated under license from TED.</p>
+            <p class="text-gray-500 text-sm">&copy; 2025 TEDxJSS International School Youth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fluid page transitions
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                if (page.classList.contains('active')) {
+                    page.classList.remove('active');
+                    page.classList.add('fade-exit');
+                    setTimeout(() => {
+                        page.classList.remove('fade-exit');
+                    }, 500);
+                }
+            });
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('fade-enter');
+                setTimeout(() => {
+                    target.classList.remove('fade-enter');
+                    target.classList.add('fade-enter-active', 'active');
+                    setTimeout(() => {
+                        target.classList.remove('fade-enter-active');
+                    }, 600);
+                }, 10);
+            }
+            // Animate nav links
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.textContent.replace(/\s/g, '').toLowerCase().includes(pageId)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        // Mobile menu animation
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 500);
+            } else {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.add('active');
+                }, 10);
+            }
+        }
+        // Animate cards and sections on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.card-hover, section');
+            elements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+                    el.classList.add('fade-enter-active');
+                }
+            });
+        }
+        window.addEventListener('scroll', animateOnScroll);
+        document.addEventListener('DOMContentLoaded', animateOnScroll);
+
+        // Add ripple effect on button click
+        const rippleBtn = document.querySelectorAll('button');
+        rippleBtn.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple-effect';
+                ripple.style.left = e.offsetX + 'px';
+                ripple.style.top = e.offsetY + 'px';
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 700);
+            });
+        });
+
+        // Handle reel submission (client-side placeholder)
+        function handleReelSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            const team = data.get('team')?.trim();
+            const email = data.get('email')?.trim();
+            const video = data.get('video_url')?.trim();
+            if (!team || !email || !video) {
+                alert('Please provide team name, contact email and a video link before submitting.');
+                return;
+            }
+            // In a real deployment we'd POST this to a backend or a form endpoint.
+            // For now show a friendly confirmation and reset.
+            alert('Thanks ' + team + '! Your reel link has been received. We will contact you at ' + email + '.');
+            form.reset();
+        }
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'989339df654eb47c',t:'MTc1OTU2NTY3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+
+
+
+</html>
