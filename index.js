@@ -7,7 +7,7 @@ const GROQ_API_BASE = 'https://api.groq.com/openai/v1';
 
 // API Key Configuration
 // Set your Groq API key directly here, or leave as undefined to load from ./apikey file
-const GROQ_API_KEY_DIRECT = "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"; // Replace undefined with your API key string, e.g., 'your-api-key-here'
+const GROQ_API_KEY_DIRECT = "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"; // Replace undefined with your API key string, e.g., 'your-api-key-here'
 
 let GROQ_API_KEY = ''; // Will be set from GROQ_API_KEY_DIRECT or loaded from file
 
