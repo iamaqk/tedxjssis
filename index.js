@@ -1,7 +1,3 @@
-// ============================================================================
-// CONFIGURATION SECTION - Customize your chatbot here
-// ============================================================================
-
 // Groq API Configuration
 const GROQ_API_BASE = 'https://api.groq.com/openai/v1';
 
